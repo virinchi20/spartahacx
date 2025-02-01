@@ -1,5 +1,5 @@
-import Hero from './Hero';
+import Dashboard from '@/components/Dashboard';
 
 export const Index = () => {
-  return <Hero />;
+  return <Dashboard />;
 };
