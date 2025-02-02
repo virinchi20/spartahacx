@@ -118,7 +118,7 @@ def analyze_and_create_items():
     }), 201
         
 @app.route('/items/checksafety', methods=['POST'])
-async def check_safety():
+def check_safety():
     try:
         if 'image' not in request.files:
             return jsonify({"error": "No image file provided"}), 400
@@ -132,7 +132,7 @@ async def check_safety():
         if image_file.filename == '':
             return jsonify({"error": "No selected file"}), 400
         
-        check_item = await food_analysis_service.safe_to_eat(image_file, username)
+        check_item = food_analysis_service.safe_to_eat(image_file, username)
 
         return jsonify({
             "message": "success",
