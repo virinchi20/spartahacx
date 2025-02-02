@@ -3,11 +3,12 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime
 from bson import ObjectId
 from flask_pymongo import MongoClient
+import certifi
 
-mongo = MongoClient("mongodb://localhost:27017/FoodAnalyzer")
+mongo = MongoClient("mongodb+srv://sparta:hack@cluster0.m4ry3.mongodb.net/", tlsCAFile=certifi.where())
 class ItemExpiringRepository:
     def __init__(self):
-        self.collection = mongo.FoodAnalyzer.items_expiring
+        self.collection = mongo.test.items_expiring
 
     def find_by_username(self, username: str) -> List[Dict[str, Any]]:
         return list(self.collection.find({"username": username}))

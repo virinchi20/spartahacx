@@ -3,11 +3,12 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime
 from bson import ObjectId
 from flask_pymongo import MongoClient
+import certifi
 
-mongo = MongoClient("mongodb://localhost:27017/FoodAnalyzer")
+mongo = MongoClient("mongodb+srv://sparta:hack@cluster0.m4ry3.mongodb.net/", tlsCAFile=certifi.where())
 class ItemRepository:
     def __init__(self):
-        self.collection = mongo.FoodAnalyzer.items
+        self.collection = mongo.test.items
 
     def insert_one(self, item_data: Dict[str, Any]) -> int:
         result = self.collection.insert_one(item_data)

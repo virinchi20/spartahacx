@@ -13,16 +13,6 @@ const UploadImageForCheck = ({ setSafetyCheck }) => {
 
   const boxSize = 295; // Size for both upload area and image preview
 
-  const fakeAsyncTimer = async (ms) => {
-    await new Promise(resolve => setTimeout(resolve, ms));
-  };
-  
-  (async () => {
-    console.log("Before delay");
-    await fakeAsyncTimer(3000); // 3 seconds delay
-    console.log("After delay");
-  })();
-
   const { data: { user } = {}, mutate, isValidating } = useCurrentUser();
   const handleFileSelect = async (file) => {
     const imagePreviewUrl = URL.createObjectURL(file);
@@ -36,21 +26,21 @@ const UploadImageForCheck = ({ setSafetyCheck }) => {
     formData.append('username', user.username);
 
     try {
-      const localUrl = 'http://127.0.0.1:5000/items/analyze';
-      // const response = await axios.post(localUrl, formData, {
-      //   headers: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // });
+      const localUrl = 'http://127.0.0.1:5000/items/checksafety';
+      const response = await axios.post(localUrl, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-      // if (response.status === 200 || response.status === 201) {
-      //   // message.success('Image uploaded successfully');
-      // }
-      // setSafetyCheck(parsedResponse);
-
-      await fakeAsyncTimer(3000)
-
-      setSafetyCheck("Failed");
+      if (response.status === 200 || response.status === 201) {
+        console.log('response: ', response.data.safe_to_eat.safe_to_eat);
+      }
+      setSafetyCheck(
+        response.data.safe_to_eat.safe_to_eat
+          ? 'Safe to Eat'
+          : 'Throw it Right Away'
+      );
     } catch (err) {
       console.log('err: ', err);
     }

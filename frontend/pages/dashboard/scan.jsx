@@ -32,10 +32,11 @@ const columns = [
 export default function Scan() {
   const [safetyCheck, setSafetyCheck] = useState('');
   useEffect(() => {
-    if (safetyCheck !== "failed") {
-      toast.success(
-        'Failed'
-      );
+    if (safetyCheck === 'Safe to Eat') {
+      toast.success(safetyCheck);
+    }
+    if (safetyCheck === 'Throw it Right Away') {
+      toast.error(safetyCheck);
     }
   }, [setSafetyCheck, safetyCheck]);
   return (

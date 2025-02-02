@@ -7,12 +7,15 @@ from dotenv import load_dotenv
 from services.food_analysis_service import FoodAnalysisService
 from services.item_service import ItemService
 import json
-
+from flask_cors import CORS  # Import CORS
 load_dotenv()
 
 
 app = Flask(__name__)
 # app.config["MONGO_URI"]="mongodb://localhost:27017/FoodAnalyzer"
+
+
+CORS(app)  # Enable CORS for all routes
 
 # mongo = PyMongo(app)
 socketio = SocketIO(app)
