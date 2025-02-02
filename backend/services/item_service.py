@@ -59,7 +59,7 @@ class ItemService:
         # Assuming the OpenAI response contains a list under 'items' key
         for item_data in analyzed_items.get('list_of_objects', []):
             item = {
-                # "username": username,
+                "username": username,
                 "name": item_data['name'],
                 "expiresAt": (datetime.fromisoformat(datetime.now().date().isoformat()) + timedelta(days=item_data['expiresAt'])).isoformat()
             }
