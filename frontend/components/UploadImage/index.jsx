@@ -3,8 +3,8 @@ import { Upload, Button, message } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
-const UploadImage = () => {
-    const handleUpload = async (file) => {
+const UploadImage = ({ setItemList }) => {
+  const handleUpload = async (file) => {
     const formData = new FormData();
     formData.append('image', file);
     for (let pair of formData.entries()) {
@@ -19,6 +19,7 @@ const UploadImage = () => {
 
       if (response.status === 200) {
         message.success('Image uploaded successfully');
+        setItemList(response.data);
       }
     } catch (error) {
       message.error('Upload failed');

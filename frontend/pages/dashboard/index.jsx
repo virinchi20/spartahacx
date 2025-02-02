@@ -94,7 +94,7 @@ const Dashboard = ({children}) => {
               borderRadius: borderRadiusLG,
             }}
           >
-            {router.pathname === '/dashboard/list' && user ? children : <>Please Sign In</>}
+            {router.pathname === '/dashboard/list' && user && children}
             {router.pathname === '/dashboard/add' && user && children}  
             {router.pathname === '/dashboard/scan' && user && children}
           </Content>
