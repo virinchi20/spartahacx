@@ -117,9 +117,31 @@ def analyze_and_create_items():
         "items": json.dumps(created_items,default=str),
     }), 201
         
+@app.route('/items/checksafety', methods=['POST'])
+async def check_safety():
+    try:
+        if 'image' not in request.files:
+            return jsonify({"error": "No image file provided"}), 400
+        
+        image_file = request.files['image']
+        username = request.form.get('username')
+
+        if not username:
+            return jsonify({"error": "Username is required"}), 400
+        
+        if image_file.filename == '':
+            return jsonify({"error": "No selected file"}), 400
+        
+        check_item = await food_analysis_service.safe_to_eat(image_file, username)
+
+        return jsonify({
+            "message": "success",
+            "safe_to_eat": check_item
+        }), 201
     
-
-
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
