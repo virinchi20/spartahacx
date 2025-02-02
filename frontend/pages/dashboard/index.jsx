@@ -61,6 +61,9 @@ const Dashboard = ({ children }) => {
             <Menu.Item key="/dashboard/scan" icon={<UploadOutlined />}>
               Scan
             </Menu.Item>
+            <Menu.Item key="/dashboard/webcamcapture" icon={<UploadOutlined />}>
+              Webcam
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: collapsed ? '100px' : '200px' }}>
@@ -93,6 +96,7 @@ const Dashboard = ({ children }) => {
             {router.pathname === '/dashboard/list' && user && children}
             {router.pathname === '/dashboard/add' && user && children}
             {router.pathname === '/dashboard/scan' && user && children}
+            {router.pathname === '/dashboard/webcamcapture' && user && children}
           </Content>
         </Layout>
       </Layout>
