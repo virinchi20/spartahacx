@@ -28,8 +28,8 @@ const columns = [
   },
   {
     title: 'Days Left to Expire',
-    dataIndex: 'expirationDate',
-    key: 'expirationDate',
+    dataIndex: 'expiresAt',
+    key: 'expiresAt',
   },
 ];
 
@@ -40,7 +40,17 @@ export default function List() {
       try {
         const response = await axios.get('/api/get-scanned-items'); // Calling Next.js API route
         console.log(('response.data: ', response.data));
-        setScannedItems(response.data);
+        const formattedList = response.data.map((el) => {
+          const diffInMs = new Date(el.expiresAt) - new Date()
+          const daysLeft = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+          return {
+            index: el.index,
+            name: el.name,
+            expiresAt: daysLeft
+          }
+        })
+        
+        setScannedItems(formattedList);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
