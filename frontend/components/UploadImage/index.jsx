@@ -1,52 +1,55 @@
-import React, { useState } from "react";
-import { InboxOutlined } from "@ant-design/icons";
-import { Upload, message, Image, Typography } from "antd";
-import axios from "axios"; // Import Axios for API requests
+import React, { useState } from 'react';
+import { InboxOutlined } from '@ant-design/icons';
+import { Upload, message, Image, Typography } from 'antd';
+import axios from 'axios'; // Import Axios for API requests
 
 const { Dragger } = Upload;
 const { Text } = Typography;
 
-const UploadImage = () => {
+const UploadImage = ({ setItemList }) => {
   const [imageUrl, setImageUrl] = useState(null); // Store uploaded image URL
   const boxSize = 295; // Size for both upload area and image preview
 
-  const handleFileSelect = (file) => {
+  const handleFileSelect = async (file) => {
     // Show local preview while uploading
     const imagePreviewUrl = URL.createObjectURL(file);
     setImageUrl(imagePreviewUrl);
 
-    message.loading("Uploading...");
+    // message.loading('Uploading...');
 
     // Create FormData object for file upload
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append('image', file);
 
-    axios
-      .post("/api/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((response) => {
-        message.success(`${file.name} uploaded successfully`);
-        setImageUrl(response.data.imageUrl); // Use uploaded image URL
-      })
-      .catch(() => {
-        message.error(`${file.name} upload failed`);
+    try {
+      const response = await axios.post('/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
+
+      if (response.status === 200) {
+        setItemList(response.data);
+        message.success('Image uploaded successfully');
+      }
+    } catch (error) {
+      message.error('Upload failed');
+    }
   };
 
   return (
     <div
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "65vh",
-        backgroundColor: "#f4f7fc",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
-        gap: "30px",
-        flexWrap: "wrap", // Responsive
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '65vh',
+        backgroundColor: '#f4f7fc',
+        padding: '20px',
+        borderRadius: '10px',
+        boxShadow: '0px 8px 16px rgba(0, 0, 0, 0.1)',
+        gap: '30px',
+        flexWrap: 'wrap', // Responsive
       }}
     >
       {/* Upload Area (Left Side) */}
@@ -57,30 +60,31 @@ const UploadImage = () => {
         }}
         showUploadList={false}
         multiple={false}
-        onDrop={(e) => console.log("Dropped file:", e.dataTransfer.files)}
+        onDrop={(e) => console.log('Dropped file:', e.dataTransfer.files)}
         style={{
-          borderRadius: "12px",
-          backgroundColor: "#fff",
-          border: "2px dashed #1890ff",
-          padding: "30px",
-          width: "300px",
-          height: "300px",
-          transition: "0.3s",
-          textAlign: "center",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          borderRadius: '12px',
+          backgroundColor: '#fff',
+          border: '2px dashed #1890ff',
+          padding: '30px',
+          width: '300px',
+          height: '300px',
+          transition: '0.3s',
+          textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <p className="ant-upload-drag-icon" style={{ color: "#1890ff" }}>
-          <InboxOutlined style={{ fontSize: "48px" }} />
+        <p className="ant-upload-drag-icon" style={{ color: '#1890ff' }}>
+          <InboxOutlined style={{ fontSize: '48px' }} />
         </p>
-        <Text strong style={{ fontSize: "16px" }}>
+        <Text strong style={{ fontSize: '16px' }}>
           Drag & Drop an image here
         </Text>
-        <p className="ant-upload-hint" style={{ color: "#666", marginTop: 8 }}>
-          Click or drag an image to upload. Selecting a new image replaces the existing one.
+        <p className="ant-upload-hint" style={{ color: '#666', marginTop: 8 }}>
+          Click or drag an image to upload. Selecting a new image replaces the
+          existing one.
         </p>
       </Dragger>
 
@@ -90,13 +94,13 @@ const UploadImage = () => {
           style={{
             width: `${boxSize}px`,
             height: `${boxSize}px`,
-            background: "#fff",
-            borderRadius: "12px",
-            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
+            background: '#fff',
+            borderRadius: '12px',
+            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
           }}
         >
           <Image
@@ -105,8 +109,8 @@ const UploadImage = () => {
             width={boxSize}
             height={boxSize}
             style={{
-              objectFit: "cover", // Ensures it fills the box properly
-              borderRadius: "12px",
+              objectFit: 'cover', // Ensures it fills the box properly
+              borderRadius: '12px',
             }}
           />
         </div>
