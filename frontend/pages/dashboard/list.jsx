@@ -50,7 +50,7 @@ export default function List() {
   }, [setScannedItems]);
   return (
     <Dashboard>
-      <h1>Listing Items from my Fridge</h1>
+      <h1 style={{marginLeft : '37px', fontSize : '24px'}}>Listing Items from my Fridge</h1>
       <div style={{ padding: '20px', marginTop: '10px' }}>
         <Table
           columns={columns}
