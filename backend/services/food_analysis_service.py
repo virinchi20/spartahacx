@@ -30,7 +30,7 @@ class FoodAnalysisService:
                 messages=[
                     {
                         "role": "system",
-                        "content": "you are an expert at extracting grocery items from an image and their average expire lifetime in days and give the output in json format returned as an object containing 'name' (string) and 'expiresAt' (number)"
+                        "content": "you are an expert at extracting grocery items from an image and their average expire lifetime in days and give the output in json format returned as an object containing 'name' (string) and 'expiresAt' (number). If the item is bad, reject that spefic item"
                     },
                     {
                         "role": "user",

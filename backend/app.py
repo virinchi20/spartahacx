@@ -105,8 +105,12 @@ def analyze_and_create_items():
             
     analyzed_items = food_analysis_service.analyze_image(image_file, username)
     print("app",analyzed_items["list_of_objects"])
+    if (analyzed_items["list_of_objects"] == []):
+        return jsonify({
+            "message": "Success",
+            "item":False
+        }), 201
     created_items = item_service.create_items_from_analysis(username, analyzed_items)
-        
     return jsonify({
         "message": "Success",
     }), 201
