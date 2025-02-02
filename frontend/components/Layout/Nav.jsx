@@ -76,7 +76,7 @@ const UserMenu = ({ user, mutate }) => {
               <a className={styles.item}>Profile</a>
             </Link>
             <Link passHref href="/settings">
-              <a className={styles.item}>Settngs</a>
+              <a className={styles.item}>Settings</a>
             </Link>
             <div className={styles.item} style={{ cursor: 'auto' }}>
               <Container alignItems="center">
@@ -106,36 +106,34 @@ const Nav = () => {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Link href="/">
-            <a className={styles.logo}>What's in My Fridge</a>
-          </Link>
-          <Container>
-            {user ? (
-              <>
-                <UserMenu user={user} mutate={mutate} />
-              </>
-            ) : (
-              <>
-                <Link passHref href="/login">
+  <Link href="/">
+    <a className={styles.logo}>What's in My Fridge</a>
+  </Link>
+  <Container>
+    {user ? (
+      <UserMenu user={user} mutate={mutate} />
+    ) : (
+      <>
+        <Link passHref href="/login">
                   <ButtonLink
                     size="small"
                     type="success"
                     variant="ghost"
                     color="link"
                   >
-                    Log in
-                  </ButtonLink>
-                </Link>
-                <Spacer axis="horizontal" size={0.25} />
-                <Link passHref href="/sign-up">
-                  <Button size="small" type="success">
-                    Sign Up
-                  </Button>
-                </Link>
-              </>
-            )}
-          </Container>
-        </Container>
+            Log in
+          </ButtonLink>
+        </Link>
+        <Spacer axis="horizontal" size={0.25} />
+        <Link passHref href="/sign-up">
+          <Button size="small" type="success">
+            Sign Up
+          </Button>
+        </Link>
+      </>
+    )}
+  </Container>
+</Container>
       </Wrapper>
     </nav>
   );
