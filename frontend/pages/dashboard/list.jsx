@@ -1,6 +1,8 @@
 // import React from 'react';
 import Dashboard from './index';
 import { Table } from 'antd';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // // Define mock data for the table
 const data = [
@@ -32,22 +34,36 @@ const columns = [
 ];
 
 export default function List() {
+  const [scannedItems, setScannedItems] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/api/get-scanned-items'); // Calling Next.js API route
+        console.log(('response.data: ', response.data));
+        setScannedItems(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [setScannedItems]);
   return (
     <Dashboard>
-        <h1>Listing Items from my Fridge</h1>
-        <div style={{ padding: '20px', marginTop: '10px' }}>
-          <Table
-            columns={columns}
-            dataSource={data}
-            bordered
-            pagination={false}
-            rowClassName="table-row-hover"
-            style={{
-              borderRadius: '8px',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-            }}
-          />
-        </div>
+      <h1>Listing Items from my Fridge</h1>
+      <div style={{ padding: '20px', marginTop: '10px' }}>
+        <Table
+          columns={columns}
+          dataSource={scannedItems}
+          bordered
+          pagination={false}
+          rowClassName="table-row-hover"
+          style={{
+            borderRadius: '8px',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+          }}
+        />
+      </div>
     </Dashboard>
   );
 }
