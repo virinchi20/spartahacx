@@ -10,11 +10,10 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 import Head from 'next/head';
 import { useCurrentUser } from '@/lib/user';
-// import List from './list';
 
 const { Header, Sider, Content } = Layout;
 
-const Dashboard = ({children}) => {
+const Dashboard = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -23,14 +22,13 @@ const Dashboard = ({children}) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to /dashboard/list if the current route is '/'
     if (router.pathname === '/') {
       router.push('/dashboard/list');
     }
   }, [router]);
 
   const handleMenuClick = (e) => {
-    router.push(e.key); // Redirect to the key (route) of the clicked menu item
+    router.push(e.key);
   };
 
   const { data: { user } = {}, mutate, isValidating } = useCurrentUser();
@@ -45,15 +43,14 @@ const Dashboard = ({children}) => {
           trigger={null}
           collapsible
           collapsed={collapsed}
-          style={{ height: '100vh' }}
+          style={{ height: '100vh', position: 'fixed'}}
         >
           <div className="demo-logo-vertical" />
           <Menu
             theme="dark"
             mode="inline"
-            // selectedKeys={[router.pathname || "/"]}
             defaultSelectedKeys={['1']}
-            onClick={handleMenuClick} // Handle click event
+            onClick={handleMenuClick}
           >
             <Menu.Item key="/dashboard/list" icon={<VideoCameraOutlined />}>
               List
@@ -66,12 +63,13 @@ const Dashboard = ({children}) => {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout>
+        <Layout style={{ marginLeft: collapsed ? '100px' : '200px' }}>
           <Header
             style={{
               padding: 0,
               background: colorBgContainer,
-              height: '64px',
+              height: '64px', // Ensure this is consistent with the layout
+              zIndex: 1, // Added to make sure the header stays above the content
             }}
           >
             <Button
@@ -87,15 +85,15 @@ const Dashboard = ({children}) => {
           </Header>
           <Content
             style={{
-              margin: '24px 16px',
-              padding: 24,
-              minHeight: 'calc(100vh - 112px)',
+              margin: '24px 24px',
+              padding: '24px 24px 24px 0', // Adjust padding to avoid overlap with header
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
+              overflow: 'auto', // Handle overflow
             }}
           >
             {router.pathname === '/dashboard/list' && user && children}
-            {router.pathname === '/dashboard/add' && user && children}  
+            {router.pathname === '/dashboard/add' && user && children}
             {router.pathname === '/dashboard/scan' && user && children}
           </Content>
         </Layout>

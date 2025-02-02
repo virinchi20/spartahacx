@@ -37,12 +37,12 @@ handler.post(async (req, res) => {
     { name: 'eggs', average_expire_days: 21 },
     { name: 'spaghetti', average_expire_days: 730 },
     { name: 'bread', average_expire_days: 7 },
-    { name: 'canned food', average_expire_days: 365 },
-    { name: 'juice', average_expire_days: 7 },
-    { name: 'cherry tomatoes', average_expire_days: 5 },
-    { name: 'wine', average_expire_days: 3650 },
-    { name: 'milk carton', average_expire_days: 7 },
-    { name: 'cereal box', average_expire_days: 180 },
+    // { name: 'canned food', average_expire_days: 365 },
+    // { name: 'juice', average_expire_days: 7 },
+    // { name: 'cherry tomatoes', average_expire_days: 5 },
+    // { name: 'wine', average_expire_days: 3650 },
+    // { name: 'milk carton', average_expire_days: 7 },
+    // { name: 'cereal box', average_expire_days: 180 },
   ];
 
   res.json(dummyResponse);
