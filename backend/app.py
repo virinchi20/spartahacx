@@ -79,6 +79,16 @@ def get_user_items(username):
         "expiresAt": item.expiresAt,
     } for item in items])
 
+@app.route('/items_expiring/user/<username>', methods=['GET'])
+def get_user_items_expiring(username):
+    items = item_service.get_items_expiring_by_username(username)
+    return jsonify([{
+        "id": item._id,
+        "username": item.username,
+        "name": item.name,
+        "expiresAt": item.expiresAt,
+    } for item in items])
+
 @app.route('/items/analyze', methods=['POST'])
 def analyze_and_create_items():
     if 'image' not in request.files:

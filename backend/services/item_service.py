@@ -3,10 +3,12 @@ from typing import List, Optional
 from datetime import datetime, timedelta
 from models.Item import Item
 from repository.item_repository import ItemRepository
+from repository.items_expiring_repository import ItemExpiringRepository
 
 class ItemService:
     def __init__(self):
         self.repository = ItemRepository()
+        self.items_expiring_repo = ItemExpiringRepository()
 
     def create_item(self, username: str, name: str, expiresAt: Optional[datetime] = None) -> Item:
         item_data = {
@@ -35,6 +37,29 @@ class ItemService:
 
     def get_items_by_username(self, username: str) -> List[Item]:
             items_data = self.repository.find_by_username(username)
+            items_list = []
+            
+            for item in items_data:
+                try:
+                    # First log what we got from the database
+                    print(f"Processing item from DB: {item}")
+                    
+                    item_obj = Item(
+                        _id=str(item.get('_id')),
+                        username=item.get('username', ''),
+                        name=item.get('name', ''),
+                        expiresAt=item.get('expiresAt')
+                    )
+                    items_list.append(item_obj)
+                except Exception as e:
+                    print(f"Error creating item object: {str(e)}")
+                    print(f"Problematic item data: {item}")
+                    continue
+                    
+            return items_list
+    
+    def get_items_expiring_by_username(self, username: str) -> List[Item]:
+            items_data = self.items_expiring_repo.find_by_username(username)
             items_list = []
             
             for item in items_data:
