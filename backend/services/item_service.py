@@ -88,7 +88,7 @@ class ItemService:
             return self.get_item_by_id(item_id)
         return None
 
-    def delete_item(self, item_id: int) -> bool:
+    def delete_item(self, item_id: str) -> bool:
         return self.repository.delete_by_id(item_id)
     
     def create_items_from_analysis(self, username: str, analyzed_items: dict) -> List[Item]:
@@ -105,3 +105,18 @@ class ItemService:
         
 
         return items_to_create
+    
+    def delete_item_by_id(self, object_id: str) -> bool:
+        try:
+            return self.repository.delete_by_object_id(object_id)
+        except Exception as e:
+            print(f"Service - Delete error: {str(e)}")
+            return False
+        
+
+    def delete_item_expiring_by_id(self, object_id: str) -> bool:
+        try:
+            return self.items_expiring_repo.delete_by_object_id(object_id)
+        except Exception as e:
+            print(f"Service - Delete error: {str(e)}")
+            return False

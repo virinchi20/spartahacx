@@ -1,3 +1,4 @@
+from bson import ObjectId
 from flask import Flask,jsonify,request
 from flask_pymongo import PyMongo
 from flask_socketio import SocketIO
@@ -64,11 +65,44 @@ def update_item(item_id):
         return jsonify({"message": "Item updated successfully"})
     return jsonify({"message": "Item not found"}), 404
 
-@app.route('/items/<int:item_id>', methods=['DELETE'])
-def delete_item(item_id):
-    if item_service.delete_item(item_id):
-        return jsonify({"message": "Item deleted successfully"})
-    return jsonify({"message": "Item not found"}), 404
+@app.route('/items/<string:object_id>', methods=['DELETE'])
+def delete_item(object_id):
+    print(object_id)
+    try:
+        # Validate ObjectId format
+        if not ObjectId.is_valid(object_id):
+            return jsonify({
+                "error": "Invalid object ID format"
+            }), 400
+        
+        result = item_service.delete_item_by_id(object_id)
+        
+        if result==False:
+            result = item_service.delete_item_expiring_by_id(object_id)
+            if result:
+                return jsonify({
+                "message": "Item deleted successfully",
+                "id": object_id
+            }), 200
+            else :
+                return jsonify({
+                "error": "Item not found"
+                 }), 404
+        elif result:
+            return jsonify({
+                "message": "Item deleted successfully",
+                "id": object_id
+            }), 200
+        else:
+            return jsonify({
+                "error": "Item not found"
+            }), 404
+
+    except Exception as e:
+        return jsonify({
+            "error": "Failed to delete item",
+            "details": str(e)
+        }), 500
 
 @app.route('/items/user/<username>', methods=['GET'])
 def get_user_items(username):

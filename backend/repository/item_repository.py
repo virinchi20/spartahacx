@@ -1,6 +1,7 @@
 # repository/item_repository.py
 from typing import List, Optional, Dict, Any
 from datetime import datetime
+from bson import ObjectId
 from flask_pymongo import MongoClient
 
 mongo = MongoClient("mongodb://localhost:27017/FoodAnalyzer")
@@ -29,6 +30,15 @@ class ItemRepository:
         )
         return result.modified_count > 0
 
-    def delete_by_id(self, item_id: int) -> bool:
+    def delete_by_id(self, item_id: str) -> bool:
+        print(item_id)
         result = self.collection.delete_one({"_id": item_id})
         return result.deleted_count > 0
+    
+    def delete_by_object_id(self, object_id: str) -> bool:
+        try:
+            result = self.collection.delete_one({"_id": ObjectId(object_id)})
+            return result.deleted_count > 0
+        except Exception as e:
+            print(f"Repository - Delete error: {str(e)}")
+            return False
