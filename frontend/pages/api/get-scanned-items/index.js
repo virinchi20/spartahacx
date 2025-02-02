@@ -16,25 +16,14 @@ handler.get(async (req, res) => {
     return;
   }
 
-  // try {
-  //   const response = await axios.get(
-  //     'https://jsonplaceholder.typicode.com/posts/1'
-  //   ); // Example API
-  //   console.log("response: ", response);
-    
-  //   res.status(200).json(response.data);
-  // } catch (error) {
-  //   res.status(500).json({ error: 'Failed to fetch data' });
-  // }
+  try {
+    const response = await axios.get("http://127.0.0.1:5000/items/user/benwingeorge"); // Example API
+    console.log('response: ', response.data);
 
-  const dummyResponse = [
-    { key: '1', name: 'Item 1', expirationDate: '2025-02-15' },
-    { key: '2', name: 'Item 2', expirationDate: '2025-03-01' },
-    { key: '3', name: 'Item 3', expirationDate: '2025-04-10' },
-    { key: '4', name: 'Item 4', expirationDate: '2025-02-05' },
-    { key: '5', name: 'Item 5', expirationDate: '2025-05-20' },
-  ];
-  res.json(dummyResponse);
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch data' });
+  }
 });
 
 export default handler;
