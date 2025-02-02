@@ -4,8 +4,8 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
+  PlusOutlined,
+  AppstoreOutlined,
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import Head from 'next/head';
@@ -52,10 +52,10 @@ const Dashboard = ({ children }) => {
             defaultSelectedKeys={['1']}
             onClick={handleMenuClick}
           >
-            <Menu.Item key="/dashboard/list" icon={<VideoCameraOutlined />}>
+            <Menu.Item key="/dashboard/list" icon={<AppstoreOutlined />}>
               List
             </Menu.Item>
-            <Menu.Item key="/dashboard/add" icon={<UserOutlined />}>
+            <Menu.Item key="/dashboard/add" icon={<PlusOutlined />}>
               Add
             </Menu.Item>
             <Menu.Item key="/dashboard/scan" icon={<UploadOutlined />}>
@@ -64,7 +64,7 @@ const Dashboard = ({ children }) => {
           </Menu>
         </Sider>
         <Layout style={{ marginLeft: collapsed ? '100px' : '200px' }}>
-          <Header
+          {/* <Header
             style={{
               padding: 0,
               background: colorBgContainer,
@@ -82,11 +82,9 @@ const Dashboard = ({ children }) => {
                 height: 64,
               }}
             />
-          </Header>
+          </Header> */}
           <Content
-            style={{
-              margin: '24px 24px',
-              padding: '24px 24px 24px 0', // Adjust padding to avoid overlap with header
+            style={{            
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
               overflow: 'auto', // Handle overflow

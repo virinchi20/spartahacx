@@ -33,7 +33,7 @@ export default function Add() {
   }, [setItemList]);
   return (
     <Dashboard>
-      <h1>Add your Items Here</h1>
+      <h1 style={{marginLeft : '37px'}}>Add your Items Here</h1>
       <div>
         <UploadImage setItemList={setItemList} />
         {itemList && (
