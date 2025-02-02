@@ -49,6 +49,7 @@ const UserMenu = ({ user, mutate }) => {
       });
       toast.success('You have been signed out');
       mutate({ user: null });
+      if (user) router.replace('/dashboard/list')
     } catch (e) {
       toast.error(e.message);
     }
