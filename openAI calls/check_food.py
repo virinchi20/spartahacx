@@ -17,7 +17,7 @@ completion = client.chat.completions.create(
     messages=[
         {
             "role": "system",
-            "content": "you are an expert at analyzing food and giving a verdict on if the food is safe to eat or should be thrown away. give a structured json output"
+            "content": "you are an expert at analyzing food and giving a verdict on if the food is safe to eat or should be thrown away. give a structured json output with just a true or false value. true if it is safe to eat"
         },
         {
             "role": "user",
