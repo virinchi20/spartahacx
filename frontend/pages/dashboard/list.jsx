@@ -50,7 +50,6 @@ export default function List() {
   }, [setScannedItems]);
   return (
     <Dashboard>
-<<<<<<< Updated upstream
       <h1>Listing Items from my Fridge</h1>
       <div style={{ padding: '20px', marginTop: '10px' }}>
         <Table
@@ -65,22 +64,6 @@ export default function List() {
           }}
         />
       </div>
-=======
-        <h1 style={{marginLeft : '37px'}}>Listing Items from my Fridge</h1>
-        <div style={{ padding: '20px', marginTop: '10px' }}>
-          <Table
-            columns={columns}
-            dataSource={data}
-            bordered
-            pagination={false}
-            rowClassName="table-row-hover"
-            style={{
-              borderRadius: '8px',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-            }}
-          />
-        </div>
->>>>>>> Stashed changes
     </Dashboard>
   );
 }
