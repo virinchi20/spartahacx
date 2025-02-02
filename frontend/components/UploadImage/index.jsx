@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import { Upload, message, Image, Typography } from 'antd';
 import axios from 'axios'; // Import Axios for API requests
+import { useCurrentUser } from '@/lib/user';
 
 const { Dragger } = Upload;
 const { Text } = Typography;
 
 const UploadImage = ({ setItemList }) => {
-  const [imageUrl, setImageUrl] = useState(null); // Store uploaded image URL
+  const [imageUrl, setImageUrl] = useState(null);
+  const [scannedItems, setScannedItems] = useState([]);
+
   const boxSize = 295; // Size for both upload area and image preview
 
+  const { data: { user } = {}, mutate, isValidating } = useCurrentUser();
   const handleFileSelect = async (file) => {
-    // Show local preview while uploading
     const imagePreviewUrl = URL.createObjectURL(file);
     setImageUrl(imagePreviewUrl);
 
@@ -20,20 +23,24 @@ const UploadImage = ({ setItemList }) => {
     // Create FormData object for file upload
     const formData = new FormData();
     formData.append('image', file);
+    formData.append('username', user.username);
 
     try {
-      const response = await axios.post('/api/upload', formData, {
+      const localUrl = 'http://127.0.0.1:5000/items/analyze';
+      const response = await axios.post(localUrl, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      if (response.status === 200) {
-        setItemList(response.data);
-        message.success('Image uploaded successfully');
+      if (response.status === 200 || response.status === 201) {
+        // message.success('Image uploaded successfully');
       }
-    } catch (error) {
-      message.error('Upload failed');
+      const parsedResponse = JSON.parse(response.data.items);
+      console.log('parsedResponse: ', parsedResponse);
+      setItemList(parsedResponse);
+    } catch (err) {
+      console.log('err: ', err);
     }
   };
 
