@@ -6,7 +6,7 @@ const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
   const onChange = useCallback(
     (e) => {
-      setTheme(e.currentTarget.value);
+      setTheme(dark);
     },
     [setTheme]
   );

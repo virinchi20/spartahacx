@@ -77,7 +77,7 @@ const SignUp = () => {
             size="large"
             required
           />
-          <Spacer size={0.75} axis="vertical" />
+          {/* <Spacer size={0.75} axis="vertical" />
           <Container alignItems="center">
             <p className={styles.subtitle}>About you</p>
             <div className={styles.seperator} />
@@ -98,7 +98,7 @@ const SignUp = () => {
             ariaLabel="Your name"
             size="large"
             required
-          />
+          /> */}
           <Spacer size={1} axis="vertical" />
           <Button
             htmlType="submit"
