@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import Head from 'next/head';
+import { useCurrentUser } from '@/lib/user';
 // import List from './list';
 
 const { Header, Sider, Content } = Layout;
@@ -32,6 +33,8 @@ const Dashboard = ({children}) => {
     router.push(e.key); // Redirect to the key (route) of the clicked menu item
   };
 
+  const { data: { user } = {}, mutate, isValidating } = useCurrentUser();
+
   return (
     <>
       <Head>
@@ -45,28 +48,6 @@ const Dashboard = ({children}) => {
           style={{ height: '100vh' }}
         >
           <div className="demo-logo-vertical" />
-          {/* <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />, 
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />, 
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />, 
-              label: 'nav 3',
-            },
-          ]}
-        /> */}
           <Menu
             theme="dark"
             mode="inline"
@@ -113,14 +94,9 @@ const Dashboard = ({children}) => {
               borderRadius: borderRadiusLG,
             }}
           >
-            {router.pathname === '/dashboard/list' && 
-            // (
-              // <div>List Content</div> // Replace this with the actual content for List
-              children
-            // )
-            }
-            {router.pathname === '/dashboard/add' && children}  
-            {router.pathname === '/dashboard/scan' && children}
+            {router.pathname === '/dashboard/list' && user ? children : <>Please Sign In</>}
+            {router.pathname === '/dashboard/add' && user && children}  
+            {router.pathname === '/dashboard/scan' && user && children}
           </Content>
         </Layout>
       </Layout>
