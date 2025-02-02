@@ -110,18 +110,18 @@ const AboutYou = ({ user, mutate }) => {
   const usernameRef = useRef();
   const nameRef = useRef();
   const bioRef = useRef();
-  const profilePictureRef = useRef();
+  // const profilePictureRef = useRef();
 
-  const [avatarHref, setAvatarHref] = useState(user.profilePicture);
-  const onAvatarChange = useCallback((e) => {
-    const file = e.currentTarget.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (l) => {
-      setAvatarHref(l.currentTarget.result);
-    };
-    reader.readAsDataURL(file);
-  }, []);
+  // const [avatarHref, setAvatarHref] = useState(user.profilePicture);
+  // const onAvatarChange = useCallback((e) => {
+  //   const file = e.currentTarget.files?.[0];
+  //   if (!file) return;
+  //   const reader = new FileReader();
+  //   reader.onload = (l) => {
+  //     setAvatarHref(l.currentTarget.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // }, []);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -134,9 +134,9 @@ const AboutYou = ({ user, mutate }) => {
         formData.append('username', usernameRef.current.value);
         formData.append('name', nameRef.current.value);
         formData.append('bio', bioRef.current.value);
-        if (profilePictureRef.current.files[0]) {
-          formData.append('profilePicture', profilePictureRef.current.files[0]);
-        }
+        // if (profilePictureRef.current.files[0]) {
+        //   formData.append('profilePicture', profilePictureRef.current.files[0]);
+        // }
         const response = await fetcher('/api/user', {
           method: 'PATCH',
           body: formData,
@@ -156,8 +156,8 @@ const AboutYou = ({ user, mutate }) => {
     usernameRef.current.value = user.username;
     nameRef.current.value = user.name;
     bioRef.current.value = user.bio;
-    profilePictureRef.current.value = '';
-    setAvatarHref(user.profilePicture);
+    // profilePictureRef.current.value = '';
+    // setAvatarHref(user.profilePicture);
   }, [user]);
 
   return (
@@ -170,7 +170,7 @@ const AboutYou = ({ user, mutate }) => {
         <Spacer size={0.5} axis="vertical" />
         <Textarea ref={bioRef} label="Your Bio" />
         <Spacer size={0.5} axis="vertical" />
-        <span className={styles.label}>Your Avatar</span>
+        {/* <span className={styles.label}>Your Avatar</span>
         <div className={styles.avatar}>
           <Avatar size={96} username={user.username} url={avatarHref} />
           <input
@@ -180,7 +180,7 @@ const AboutYou = ({ user, mutate }) => {
             ref={profilePictureRef}
             onChange={onAvatarChange}
           />
-        </div>
+        </div> */}
         <Spacer size={0.5} axis="vertical" />
         <Button
           htmlType="submit"
@@ -209,7 +209,7 @@ export const Settings = () => {
       <Spacer size={2} axis="vertical" />
       {data?.user ? (
         <>
-          <EmailVerify user={data.user} />
+          {/* <EmailVerify user={data.user} /> */}
           <AboutYou user={data.user} mutate={mutate} />
           <Auth user={data.user} />
         </>
