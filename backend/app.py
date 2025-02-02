@@ -73,33 +73,33 @@ def delete_item(item_id):
 def get_user_items(username):
     items = item_service.get_items_by_username(username)
     return jsonify([{
-        "id": item.id,
+        "id": item._id,
         "username": item.username,
         "name": item.name,
-        "expiresAt": item.expiry,
+        "expiresAt": item.expiresAt,
     } for item in items])
 
 @app.route('/items/analyze', methods=['POST'])
 def analyze_and_create_items():
-        if 'image' not in request.files:
-            return jsonify({"error": "No image file provided"}), 400
+    if 'image' not in request.files:
+        return jsonify({"error": "No image file provided"}), 400
         
-        image_file = request.files['image']
-        username = request.form.get('username')
+    image_file = request.files['image']
+    username = request.form.get('username')
         
-        if not username:
-            return jsonify({"error": "Username is required"}), 400
+    if not username:
+        return jsonify({"error": "Username is required"}), 400
             
-        if image_file.filename == '':
-            return jsonify({"error": "No selected file"}), 400
+    if image_file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
             
-        analyzed_items = food_analysis_service.analyze_image(image_file, username)
-        print("app",analyzed_items["list_of_objects"])
-        created_items = item_service.create_items_from_analysis(username, analyzed_items)
+    analyzed_items = food_analysis_service.analyze_image(image_file, username)
+    print("app",analyzed_items["list_of_objects"])
+    created_items = item_service.create_items_from_analysis(username, analyzed_items)
         
-        return jsonify({
-            "message": "Success",
-        }), 201
+    return jsonify({
+        "message": "Success",
+    }), 201
         
     
 

@@ -34,16 +34,28 @@ class ItemService:
         return None
 
     def get_items_by_username(self, username: str) -> List[Item]:
-        items_data = self.repository.find_by_username(username)
-        return [
-            Item(
-                id=item["_id"],
-                username=item["username"],
-                name=item["name"],
-                expiresAt=item.get("expiresAt")
-            )
-            for item in items_data
-        ]
+            items_data = self.repository.find_by_username(username)
+            items_list = []
+            
+            for item in items_data:
+                try:
+                    # First log what we got from the database
+                    print(f"Processing item from DB: {item}")
+                    
+                    item_obj = Item(
+                        _id=str(item.get('_id')),
+                        username=item.get('username', ''),
+                        name=item.get('name', ''),
+                        expiresAt=item.get('expiresAt')
+                    )
+                    items_list.append(item_obj)
+                except Exception as e:
+                    print(f"Error creating item object: {str(e)}")
+                    print(f"Problematic item data: {item}")
+                    continue
+                    
+            return items_list
+        
 
     def update_item(self, item_id: int, update_data: dict) -> Optional[Item]:
         success = self.repository.update_by_id(item_id, update_data)

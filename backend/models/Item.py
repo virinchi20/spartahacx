@@ -4,12 +4,12 @@ from typing import Optional
 class Item:
     def __init__(
         self,
-        # id: int,
+        _id: str,
         username: str,
         name: str,
         expiresAt: Optional[datetime] = None,
     ):
-        # self._id = id
+        self._id = _id
         self.username = username
         self.name = name
         self.expiresAt = expiresAt
