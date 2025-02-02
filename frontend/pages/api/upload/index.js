@@ -16,19 +16,21 @@ handler.post(async (req, res) => {
     return;
   }
 
-  //   try {
-  //     const response = await axios.post('url', formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //       },
-  //     });
+  const localUrl = 'http://127.0.0.1:5000/items/analyze';
 
-  //     if (response.status === 200) {
-  //       message.success('Image uploaded successfully');
-  //     }
-  //   } catch (error) {
-  //     message.error('Upload failed');
-  //   }
+  try {
+    const response = await axios.post(localUrl, req.formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      // message.success('Image uploaded successfully');
+      console.log('response: ', response.data);
+    }
+  } catch (error) {
+    console.log('ERR', error);
+  }
 
   const dummyResponse = [
     { name: 'watermelon', average_expire_days: 7 },
@@ -37,12 +39,6 @@ handler.post(async (req, res) => {
     { name: 'eggs', average_expire_days: 21 },
     { name: 'spaghetti', average_expire_days: 730 },
     { name: 'bread', average_expire_days: 7 },
-    // { name: 'canned food', average_expire_days: 365 },
-    // { name: 'juice', average_expire_days: 7 },
-    // { name: 'cherry tomatoes', average_expire_days: 5 },
-    // { name: 'wine', average_expire_days: 3650 },
-    // { name: 'milk carton', average_expire_days: 7 },
-    // { name: 'cereal box', average_expire_days: 180 },
   ];
 
   res.json(dummyResponse);

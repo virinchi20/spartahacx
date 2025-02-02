@@ -18,22 +18,26 @@ const columns = [
   },
   {
     title: 'Average Expire Days',
-    dataIndex: 'average_expire_days',
-    key: 'average_expire_days',
+    dataIndex: 'expiresAt',
+    key: 'expiresAt',
+    render: (_, el, index) => {
+      const diffInMs = new Date(el.expiresAt) - new Date();
+      const daysLeft = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+      return daysLeft
+    },
   },
 ];
 
 export default function Add() {
   const [itemList, setItemList] = useState([]);
-
-  console.log('itemList: ', itemList);
-
   useEffect(() => {
     if (itemList) console.log('itemList 2: ', itemList);
   }, [setItemList]);
   return (
     <Dashboard>
-      <h1 style={{marginLeft : '37px', fontSize : '24px'}}>Add your Items Here</h1>
+      <h1 style={{ marginLeft: '37px', fontSize: '24px' }}>
+        Add your Items Here
+      </h1>
       <div>
         <UploadImage setItemList={setItemList} />
         {itemList && (
