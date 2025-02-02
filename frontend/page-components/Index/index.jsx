@@ -1,4 +1,4 @@
-import Dashboard from '@/components/Dashboard';
+import Dashboard from 'pages/dashboard';
 
 export const Index = () => {
   return <Dashboard />;
