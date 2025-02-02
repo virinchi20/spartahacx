@@ -119,12 +119,8 @@ const Dashboard = ({children}) => {
               children
             // )
             }
-            {router.pathname === '/dashboard/add' && (
-              <div>Add Content</div> // Replace this with the actual content for Add
-            )}
-            {router.pathname === '/dashboard/scan' && (
-              <div>Scan Content</div> // Replace this with the actual content for Scan
-            )}
+            {router.pathname === '/dashboard/add' && children}  
+            {router.pathname === '/dashboard/scan' && children}
           </Content>
         </Layout>
       </Layout>
