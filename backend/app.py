@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 from services.food_analysis_service import FoodAnalysisService
 from services.item_service import ItemService
+import json
 
 load_dotenv()
 
@@ -113,6 +114,7 @@ def analyze_and_create_items():
     created_items = item_service.create_items_from_analysis(username, analyzed_items)
     return jsonify({
         "message": "Success",
+        "items": json.dumps(created_items,default=str),
     }), 201
         
     

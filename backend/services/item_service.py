@@ -101,8 +101,7 @@ class ItemService:
                 "expiresAt": (datetime.fromisoformat(datetime.now().date().isoformat()) + timedelta(days=item_data['expiresAt'])).isoformat()
             }
             items_to_create.append(item)
-        
         created_ids = self.repository.insert_many(items_to_create)
         
 
-        return created_ids
+        return items_to_create
